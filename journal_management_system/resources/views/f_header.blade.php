@@ -12,8 +12,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500display=swap" rel="stylesheet">
   <link href="{{url('css/app.css')}}" rel="stylesheet">
   <link href="{{url('css/icons.css')}}" rel="stylesheet">
-  <!-- Theme Style CSS -->
-
  
   <link rel="stylesheet" href="{{url('css/dark-theme.css')}}">
 
