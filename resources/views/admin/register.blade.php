@@ -22,7 +22,7 @@
 										<img src="assets/images/logo-icon.png" width="60" alt="" />
 									</div>
 									<div class="text-center mb-4">
-										<h5 class="">LJS Admin</h5>
+										<h5 class="">JMS Admin</h5>
 										<p class="mb-0">Please fill the below details to create your account</p>
 									</div>
 									<div class="form-body">

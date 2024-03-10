@@ -39,10 +39,6 @@ Route::group(['middleware'=>'guest'],function(){
     Route::get('admin/home', function () {
         return view('admin/home');
     }); 
-    Route::get('admin/home2', function () {
-        return view('admin/home2');
-    }); 
-
 
     Route::prefix('admin/users')->group(function () { });
     Route::prefix('admin/roles')->group(function () { 

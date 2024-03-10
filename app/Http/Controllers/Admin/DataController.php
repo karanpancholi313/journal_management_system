@@ -16,7 +16,7 @@ class DataController extends Controller
         if(Auth::attempt($credentials)){
             return redirect('admin/home');
           }
-        return view('admin/login');
+        return redirect('admin/login');
     }
 
     public function register_view(){
@@ -26,7 +26,6 @@ class DataController extends Controller
         $redata  = new User;
         $redata->name = $request['username'];
         $redata->email = $request['email'];
-        $redata->roles = 1;
         $password = $request->password;
         $redata->password = Hash::make($password);
         $redata->save();    
