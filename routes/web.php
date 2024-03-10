@@ -35,7 +35,7 @@ Route::group(['middleware'=>'guest'],function(){
             return view('admin/navbar');
         }); 
      
-        ,,ll
+         
     Route::get('admin/home', function () {
         return view('admin/home');
     }); 
