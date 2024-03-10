@@ -4,8 +4,6 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\DataController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\RolesController;
- 
-dwfdwf
 
 /*
 |--------------------------------------------------------------------------
@@ -37,6 +35,7 @@ Route::group(['middleware'=>'guest'],function(){
             return view('admin/navbar');
         }); 
      
+        ,,ll
     Route::get('admin/home', function () {
         return view('admin/home');
     }); 
