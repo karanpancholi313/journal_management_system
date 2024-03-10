@@ -1,29 +1,11 @@
 @extends('admin.layouts.app')
 @push('headerscript')
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+<link href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" rel="stylesheet" />
 @endpush
 @section('content')
-<script>
-function valthisform(){
-    var checkboxs = document.getElementsByName("ids[]");
-    var okay = false;
-    for(var i=0,l=checkboxs.length;i<l;i++){
-        if(checkboxs[i].checked){
-      		okay=true;
-        }
-    }
-    if(okay){
-    	var confirm_val = confirm('Are You Sure?');
-    	if(confirm_val){
-      		return true;
-    	}else{
-      		return false;
-    	}
-  	}else{ 
-    	alert("At least 1 item(s) must be selected");
-    	return false;
-  	}
-}
-</script>
+
 <!-- BEGIN: Content-->
 
 <div class="page-wrapper">
@@ -34,11 +16,11 @@ function valthisform(){
 			<div class="col-xl-12">
 				<div class="row mb-2 align-items-center">
 					<div class="col-6">
-						<h4 class="mb-0">Roles</h4>
+						<h4 class="mb-0">Editers</h4>
 					</div>
 					<div class="col-6">
 						<div class="text-end">
-							<a href="{{ url('admin/roles/new') }}" class="btn btn-info shadow  btn-sm "><i class="lni lni-circle-plus me-2"></i>Add New</a>
+							<a href="{{ url('admin/editers/new') }}" class="btn btn-info shadow  btn-sm "><i class="lni lni-circle-plus me-2"></i>Add New</a>
 						</div>
 					</div>
 				</div>
@@ -64,7 +46,10 @@ function valthisform(){
 												<div class="accordion-body pt-3">
 													<div class="row ticket-filter-row">
 														<div class="col-xl-2 col-sm-6">
-															<input type="text" class="form-control form-control-sm" id="title" name="title" value="{{ request()->get('title') }}" placeholder="Title">
+															<input type="text" class="form-control form-control-sm" id="name" name="name" value="{{ request()->get('name') }}" placeholder="Name">
+														</div>
+														<div class="col-xl-2 col-sm-6">
+															<input type="email" class="form-control form-control-sm" id="email" name="email" value="{{ request()->get('email') }}" placeholder="Email">
 														</div>
 														<div class="col-xl-2 ">
 															<select class="form-control form-control-sm" id="status" name="status">
@@ -73,9 +58,13 @@ function valthisform(){
 																<option @if(request()->get('status')=='2') selected @endif value="2">In-Active</option>
 															</select>
 														</div>
+														<div class="col-xl-2 ">
+															<input type="text" name="daterange" class="form-control form-control-sm date-range" value="{{request('daterange')}}" placeholder="Select Date Range" autocomplete="off"/>
+														</div>
+													
 														<div class="col-xl-auto col-sm-6">
 															<button class="btn btn-info btn-sm" title="Click here to Search" type="submit"><i class="lni lni-search-alt"></i>Search</button>
-															<a href="{{ url('admin/roles') }}" class="btn btn-light btn-sm" title="Click here to remove filter" type="button">Reset</a>
+															<a href="{{ url('admin/editers') }}" class="btn btn-light btn-sm" title="Click here to remove filter" type="button">Reset</a>
 														</div>
 													</div>
 												</div>
@@ -94,30 +83,18 @@ function valthisform(){
 			<div class="col-xl-12">
 				<div class="card">
 					<div class="card-body p-3">
-						@if(Session::has('sess_mess'))
-							<div class="alert alert-success solid alert-dismissible">
-								<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="btn-close"></button>{{Session::get('sess_mess')}}
-							</div>
-						@endif
-						@if(Session::has('error_mess'))
-							<div class="alert alert-danger solid alert-dismissible">
-								<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="btn-close"></button>{{Session::get('error_mess')}}
-							</div>
-						@endif
-						<form action="{{ url('skillsdeleteall') }}" method="post" id="form_submit" onsubmit="return valthisform();">
-							@csrf
+					
 							<div class="table-responsive">
 								<table class="table table-ticket-list table-bordered table-striped table-responsive-sm table-sm"
 									id="application-tbl1">
 									<thead>
 										<tr class="bg-light-yellow">
-											{{-- <th width="3%">
-												<div class="form-check ms-2">
-													<input class="form-check-input" type="checkbox" class="ace" id="checkAll4">
-													<label class="form-check-label" for="checkAll4"></label>
-												</div>
-											</th> --}}
-											<th class="text-start text-dark">Title</th>
+											<th class="text-start text-dark">Name</th>
+											<th class="text-start text-dark">Email</th>
+											<th class="text-start text-dark">Phone</th>
+											<th class="text-start text-dark">Role</th>
+											<th class="text-start text-dark">Address</th>
+											<th class="text-start text-dark">Create_Date</th>
 											<th width="10%" class="text-center text-dark">Status</th>
 											<th width="6%" class="text-dark text-center">Action</th>
 										</tr>
@@ -127,13 +104,12 @@ function valthisform(){
 										@php $i=1; @endphp
 										@foreach ($results as $row)
 											<tr>
-												{{-- <td class="tbl-bx">
-													<div class="form-check ms-2">
-														<input class="form-check-input" type="checkbox" class="ace" name="ids[]" value="{{ $row->id }}" id="customCheckBox">
-														<label class="form-check-label" for="customCheckBox"></label>
-													</div>
-												</td> --}}
-												<td class="text-start">{{ $row->title }}</td>
+												<td class="text-start">{{ $row->name }}</td>
+												<td class="text-start">{{ $row->email }}</td>
+												<td class="text-start">{{ $row->mobile }}</td>
+												<td class="text-start">{{ $row->role_name }}</td>
+												<td class="text-start">{{ $row->address }}</td>
+												<td class="text-start">{{ dateFormat($row->created_at)}}</td>
 												<td class="text-center">
 													@if($row->status == '1')
 														<label class="btn btn-success btn-sm m-0">Active</label>
@@ -142,8 +118,9 @@ function valthisform(){
 													@endif
 												</td>
 												<td class="text-center pe-0">
-													<a href="{{ url('admin/roles/edit/'.$row->id) }}" data-bs-toggle="tooltip" data-bs-title="Edit" class="btn btn-danger shadow btn-sm"><i class="lni lni-pencil-alt"></i></a>
-													{{-- <a onclick="return confirm('Are you sure you want to delete this record?')" href="{{ url('skills/delete/'.$row->id) }}" data-bs-toggle="tooltip" data-bs-title="Delete" class="btn btn-dark shadow btn-xs sharp"><i class="fa fa-trash"></i></a> --}}
+													<a href="{{ url('admin/editers/edit/'.$row->id) }}" data-bs-toggle="tooltip" data-bs-title="Edit" class="btn btn-danger shadow btn-sm"><i class="lni lni-pencil-alt"></i></a>
+													<a href="{{ url('admin/editers/edit/'.$row->id) }}" data-bs-toggle="tooltip" data-bs-title="Edit" class="btn btn-danger shadow btn-sm"><i class="lni lni-pencil-alt"></i></a>
+													<a onclick="return confirm('Are you sure you want to delete this record?')" href="{{ url('admin/editers/delete/'.$row->id) }}" data-bs-toggle="tooltip" data-bs-title="Delete" class="btn btn-dark shadow btn-xs sharp"><i class="lni lni-trash"></i></a>
 												</td>
 											</tr>									
 											@php $i++; @endphp
@@ -156,16 +133,7 @@ function valthisform(){
 									</tbody>
 								</table>
 							</div>
-							@if ($results->isNotEmpty())
-								{{-- <div class="row">
-									<div class="col-xl-12">
-										<input type="submit" value="Delete" name="submit" class="btn btn-danger btn-sm">
-										<input type="submit" value="Active" name="submit" class="btn btn-success btn-sm">
-										<input type="submit" value="In-Active" name="submit" class="btn btn-warning btn-sm">
-									</div>
-								</div> --}}
-							@endif
-						</form>
+						
 					</div>
 				</div>
 			</div>
@@ -178,4 +146,13 @@ function valthisform(){
 <!-- END: Content-->
 @endsection
 @push('footerscript')
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script>
+		$(".date-range").flatpickr({
+			mode: "range",
+			altInput: true,
+			altFormat: "F j, Y",
+			dateFormat: "Y-m-d",
+		});
+</script>	
 @endpush

@@ -45,7 +45,7 @@
 										if (old('status') || old()) {
 											$status_flag = old('status');
 										} else {
-											$status_flag = isset($category) ? $category->status_flag : '';
+											$status_flag = isset($role) ? $role->status : '';
 										}
 									@endphp
 									<label class="form-label mb-0 text-dark">Status <span class="text-danger">*</span></label>
@@ -55,8 +55,8 @@
 										<option {!! $status_flag == '2' ? ' selected' : '' !!} value="2">In-Active</option>
 									</select>
 									@php
-										if ($errors->has('status_flag')) {
-											echo '<span class="text-danger">' . $errors->first('status_flag') . '</span>';
+										if ($errors->has('status')) {
+											echo '<span class="text-danger">' . $errors->first('status') . '</span>';
 										}
 									@endphp
 								</div>

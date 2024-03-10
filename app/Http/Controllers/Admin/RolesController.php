@@ -41,7 +41,7 @@ class RolesController extends Controller
     {
         $validated = $request->validate(
             [
-                'title' =>  ['required', Rule::unique('Roles')->where('title', $request->title)],
+                'title' =>  ['required','unique:roles'],
                 'status' => 'required|in:1,2'
             ],
             [
@@ -82,7 +82,7 @@ class RolesController extends Controller
 		}
         $validated = $request->validate(
             [
-                'title' =>  ['required', Rule::unique('Roles')->where('title', $request->title)->ignore($id, 'id')],
+                'title' =>  ['required', 'unique:roles'],
                 'status' => 'required|in:1,2',
             ],
             [

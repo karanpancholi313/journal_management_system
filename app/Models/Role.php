@@ -30,8 +30,8 @@ class Role extends Model
 	
 	public static function GetRoleByID($request, $id)
     {
-        $result = DB::table("roles")->select('roles.*');
-		$result = $result->where("roles.id", $id);
+        $result = DB::table("roles");
+		$result = $result->where("id", $id);
 		$result = $result->first();
         return $result;		
     }

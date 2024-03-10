@@ -9,7 +9,7 @@ if (!function_exists('dateFormat')) {
     function dateFormat($date)
     {
         if (!empty($date)) {
-            return date('m/d/Y', strtotime($date));
+            return date('d/m/Y', strtotime($date));
         } else {
             return '';
         }

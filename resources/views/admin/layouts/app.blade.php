@@ -57,10 +57,10 @@
 					 
 				</li>
                 <li>
-					<a href="{{url('admin/dataNearBY')}}">
+					<a href="{{url('admin/editers')}}">
 						<div class="parent-icon"><i class="lni lni-users"></i>
 						</div>
-						<div class="menu-title">Users</div>
+						<div class="menu-title">Editers</div>
 					</a>
 				 
 				</li>
