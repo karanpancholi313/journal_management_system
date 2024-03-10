@@ -40,7 +40,7 @@ Route::group(['middleware'=>'guest'],function(){
     Route::get('admin/home', function () {
         return view('admin/home');
     }); 
- 
+//  
 
 
     Route::prefix('admin/users')->group(function () { });
