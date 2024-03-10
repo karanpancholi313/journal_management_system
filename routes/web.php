@@ -20,7 +20,7 @@ use App\Http\Controllers\Admin\RolesController;
 Route::get('/', function () { 
         return view('home');
 });
- 
+  
 Route::group(['middleware'=>'guest'],function(){
         Route::get('admin/login', function () {
             return view('admin/login');
